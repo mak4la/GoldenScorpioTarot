@@ -1,4 +1,4 @@
-const businessEmail = "goldenscorpiotarot@example.com";
+const formspreeEndpoint = "https://formspree.io/f/mnjlgjqq";
 
 const deck = [
   {
@@ -98,20 +98,37 @@ bookingForm.addEventListener("submit", (event) => {
   }
 
   const formData = new FormData(bookingForm);
-  const subject = `Reading request: ${formData.get("reading")}`;
-  const body = [
-    `Email: ${formData.get("email")}`,
-    `Reading type: ${formData.get("reading")}`,
-    `Focus area: ${formData.get("focus") || "Not provided"}`,
-    `Delivery: ${formData.get("delivery")}`,
-    "",
-    "Details:",
-    formData.get("details") || "Not provided",
-  ].join("\n");
+  const submitButton = bookingForm.querySelector("button[type='submit']");
 
-  localStorage.setItem("goldenScorpioReadingRequest", body);
-  formStatus.textContent = "Your request is drafted. Confirm the email window to send it.";
-  window.location.href = `mailto:${businessEmail}?subject=${encodeURIComponent(
-    subject,
-  )}&body=${encodeURIComponent(body)}`;
+  formData.set("_replyto", formData.get("email"));
+  formData.set("_subject", `Reading request: ${formData.get("reading")}`);
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Sending...";
+  formStatus.textContent = "Sending your request...";
+
+  fetch(formspreeEndpoint, {
+    method: "POST",
+    body: formData,
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        const message = data.errors?.[0]?.message || "Please check the form and try again.";
+        throw new Error(message);
+      }
+
+      bookingForm.reset();
+      formStatus.textContent = "Your request was sent. Thank you for booking a reading.";
+    })
+    .catch((error) => {
+      formStatus.textContent = error.message || "Something went wrong. Please try again.";
+    })
+    .finally(() => {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send request";
+    });
 });

@@ -68,7 +68,7 @@
         <div class="reading-grid">
           <article class="reading-card">
             <div class="mini-card" aria-hidden="true">
-              <span>☉</span>
+              <img src="assets/golden-scorpio-logo.png" alt="" />
             </div>
             <h3>Single Spark</h3>
             <p>A concise one-card reading for a yes/no, daily guidance, or a quick energetic check.</p>
@@ -76,7 +76,7 @@
           </article>
           <article class="reading-card">
             <div class="mini-card" aria-hidden="true">
-              <span>☾</span>
+              <img src="assets/golden-scorpio-logo.png" alt="" />
             </div>
             <h3>Past • Present • Future</h3>
             <p>A three-card spread for timing, relationship patterns, career moves, or next steps.</p>
@@ -84,7 +84,7 @@
           </article>
           <article class="reading-card">
             <div class="mini-card" aria-hidden="true">
-              <span>✦</span>
+              <img src="assets/golden-scorpio-logo.png" alt="" />
             </div>
             <h3>Golden Deep Dive</h3>
             <p>A fuller reading for layered situations where context, options, and patterns matter.</p>
@@ -121,7 +121,7 @@
                 src="assets/golden-scorpio-logo.png"
                 alt="Golden Scorpio Tarot logo"
               />
-              <strong>Golden Scorpio</strong>
+              <strong>Golden Scorpio Tarot</strong>
             </article>
           </div>
         </div>
@@ -133,8 +133,8 @@
             <p class="section-kicker">Request a reading</p>
             <h2 id="book-title">Book With Golden Scorpio Tarot</h2>
             <p>
-              Submit your request, then confirm the email draft that opens. Replace the receiving
-              address in the site code once your business email is ready.
+              Submit your request and it will be sent directly to Golden Scorpio Tarot. Add as much
+              detail as feels helpful for the reading you want.
             </p>
             <div class="trust-note">
               Tarot is offered for personal reflection and entertainment. For legal, medical, or
@@ -142,7 +142,13 @@
             </div>
           </div>
 
-          <form class="booking-form" id="bookingForm">
+          <form
+            class="booking-form"
+            id="bookingForm"
+            action="https://formspree.io/f/mnjlgjqq"
+            method="POST"
+          >
+            <input type="hidden" name="_subject" value="New Golden Scorpio Tarot request" />
             <label>
               Email
               <input name="email" type="email" placeholder="you@example.com" required />

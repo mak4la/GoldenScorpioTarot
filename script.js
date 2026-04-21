@@ -2,9 +2,9 @@ const formspreeEndpoint = "https://formspree.io/f/mnjlgjqq";
 const REQUEST_STORAGE_KEY = "goldenScorpioPendingRequest";
 
 const STRIPE_LINKS = {
-  singleSpark: "https://buy.stripe.com/test_3cIaEYf5N2BDgX31qg2ZO03",
-  pastPresentFuture: "https://buy.stripe.com/test_5kQ6oI8Hp0tvfSZ1qg2ZO01",
-  goldenDeepDive: "https://buy.stripe.com/test_00w28s2j1901gX34Cs2ZO00",
+  singleSpark: "https://buy.stripe.com/fZu7sMbZvbhf5D9ewa6kg02",
+  pastPresentFuture: "https://buy.stripe.com/5kQeVe7JfbhfghNbjY6kg01",
+  goldenDeepDive: "https://buy.stripe.com/3cIeVeaVr4SRghNgEi6kg00",
 };
 
 const READING_TO_STRIPE_KEY = {
@@ -179,15 +179,28 @@ function escapeHtml(value) {
 
 function createRequestFormData(request) {
   const formData = new FormData();
+  const confirmationSummary = [
+    "Thank you for booking with Golden Scorpio Tarot.",
+    "",
+    `Reading: ${request.reading}`,
+    `Email: ${request.email}`,
+    `Preferred name: ${request.preferredName || "Not provided"}`,
+    `Focus: ${request.focus || "Not provided"}`,
+    `Delivery preference: ${request.delivery}`,
+    "",
+    "Your request has been received. You should receive your reading by the end of day.",
+  ].join("\n");
 
   formData.set("email", request.email);
   formData.set("_replyto", request.email);
+  formData.set("_cc", request.email);
   formData.set("preferred_name", request.preferredName);
   formData.set("reading", request.reading);
   formData.set("focus", request.focus);
   formData.set("details", request.details);
   formData.set("delivery", request.delivery);
   formData.set("consent", request.consent ? "Confirmed" : "Not confirmed");
+  formData.set("customer_confirmation", confirmationSummary);
   formData.set("payment_status", "Customer returned from Stripe checkout");
   formData.set("_subject", `Paid reading request: ${request.reading}`);
 
@@ -271,6 +284,7 @@ if (requestSummary && confirmationStatus && finalizeRequest) {
           requestSummary.innerHTML = `
             <h2>Request confirmed</h2>
             <p>Your reading request has been sent to Golden Scorpio Tarot.</p>
+            <p>Check your email for a confirmation. You should receive your reading by the end of day.</p>
           `;
           confirmationStatus.textContent = "Thank you. Your request is confirmed.";
           finalizeRequest.remove();

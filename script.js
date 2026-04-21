@@ -1,5 +1,11 @@
 const formspreeEndpoint = "https://formspree.io/f/mnjlgjqq";
 
+const STRIPE_LINKS = {
+  singleSpark: "https://buy.stripe.com/test_3cIaEYf5N2BDgX31qg2ZO03",
+  pastPresentFuture: "https://buy.stripe.com/test_5kQ6oI8Hp0tvfSZ1qg2ZO01",
+  goldenDeepDive: "https://buy.stripe.com/test_00w28s2j1901gX34Cs2ZO00",
+};
+
 const deck = [
   {
     name: "The Magician",
@@ -57,7 +63,6 @@ const cardResults = document.querySelector("#cardResults");
 const pullCards = document.querySelector("#pullCards");
 const bookingForm = document.querySelector("#bookingForm");
 const formStatus = document.querySelector("#formStatus");
-const readingSelect = document.querySelector("#readingSelect");
 
 function shuffleCards(cards) {
   return [...cards].sort(() => Math.random() - 0.5);
@@ -83,11 +88,9 @@ pullCards.addEventListener("click", () => {
   renderCards(count);
 });
 
-document.querySelectorAll("[data-reading]").forEach((button) => {
-  button.addEventListener("click", () => {
-    readingSelect.value = button.dataset.reading;
-    document.querySelector("#book").scrollIntoView({ behavior: "smooth" });
-  });
+document.querySelectorAll("[data-stripe-link]").forEach((link) => {
+  const stripeKey = link.dataset.stripeLink;
+  link.href = STRIPE_LINKS[stripeKey];
 });
 
 bookingForm.addEventListener("submit", (event) => {

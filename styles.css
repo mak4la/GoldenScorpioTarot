@@ -269,7 +269,7 @@ p {
 
 .mini-card {
   align-items: center;
-  aspect-ratio: 5 / 7;
+  aspect-ratio: 1;
   background:
     radial-gradient(circle at center, rgba(255, 215, 122, 0.18), transparent 58%),
     linear-gradient(#17120b, #17120b) padding-box,
@@ -296,8 +296,17 @@ p {
 .text-button {
   background: transparent;
   color: var(--bright-gold);
+  display: inline-flex;
   font-weight: 800;
   padding: 0;
+  text-decoration: none;
+}
+
+.payment-note {
+  color: var(--bright-gold);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0;
 }
 
 .split {

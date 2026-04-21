@@ -212,6 +212,7 @@ bookingForm?.addEventListener("submit", (event) => {
 
 if (requestSummary && confirmationStatus && finalizeRequest) {
   const savedRequest = getSavedRequest();
+  let requestIsSubmitting = false;
 
   if (!savedRequest) {
     requestSummary.innerHTML = `
@@ -229,7 +230,12 @@ if (requestSummary && confirmationStatus && finalizeRequest) {
       <p><strong>Delivery:</strong> ${escapeHtml(savedRequest.delivery)}</p>
     `;
 
-    finalizeRequest.addEventListener("click", () => {
+    function finalizeSavedRequest() {
+      if (requestIsSubmitting) {
+        return;
+      }
+
+      requestIsSubmitting = true;
       finalizeRequest.disabled = true;
       finalizeRequest.textContent = "Sending request...";
       confirmationStatus.textContent = "Sending your paid reading request...";
@@ -245,11 +251,15 @@ if (requestSummary && confirmationStatus && finalizeRequest) {
           finalizeRequest.remove();
         })
         .catch((error) => {
+          requestIsSubmitting = false;
           finalizeRequest.disabled = false;
           finalizeRequest.textContent = "Send reading request";
           confirmationStatus.textContent =
             error.message || "Something went wrong. Please try again.";
         });
-    });
+    }
+
+    finalizeRequest.addEventListener("click", finalizeSavedRequest);
+    finalizeSavedRequest();
   }
 }

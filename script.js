@@ -121,6 +121,7 @@ function getRequestData(form) {
 
   return {
     email: formData.get("email") || "",
+    preferredName: formData.get("preferredName") || "",
     reading: formData.get("reading") || "",
     focus: formData.get("focus") || "",
     details: formData.get("details") || "",
@@ -159,6 +160,7 @@ function createRequestFormData(request) {
 
   formData.set("email", request.email);
   formData.set("_replyto", request.email);
+  formData.set("preferred_name", request.preferredName);
   formData.set("reading", request.reading);
   formData.set("focus", request.focus);
   formData.set("details", request.details);
@@ -224,8 +226,9 @@ if (requestSummary && confirmationStatus && finalizeRequest) {
     confirmationStatus.textContent = "There is no saved request to finalize.";
   } else {
     requestSummary.innerHTML = `
-      <h2>${escapeHtml(savedRequest.reading)}</h2>
+      <h2>You're booked for ${escapeHtml(savedRequest.reading)}</h2>
       <p><strong>Email:</strong> ${escapeHtml(savedRequest.email)}</p>
+      <p><strong>Preferred name:</strong> ${escapeHtml(savedRequest.preferredName || "Not provided")}</p>
       <p><strong>Focus:</strong> ${escapeHtml(savedRequest.focus || "Not provided")}</p>
       <p><strong>Delivery:</strong> ${escapeHtml(savedRequest.delivery)}</p>
     `;

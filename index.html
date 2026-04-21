@@ -8,7 +8,17 @@
       name="description"
       content="Book golden tarot readings and pull a virtual tarot card with Golden Scorpio Tarot."
     />
+    <meta property="og:title" content="Golden Scorpio Tarot" />
+    <meta
+      property="og:description"
+      content="Book golden tarot readings, request personal guidance, and pull a virtual golden card."
+    />
+    <meta property="og:image" content="https://goldenscorpiotarot.com/assets/golden-scorpio-tarot-footer.png" />
+    <meta property="og:url" content="https://goldenscorpiotarot.com/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preload" href="assets/golden-scorpio-hero.png" as="image" />
+    <link rel="apple-touch-icon" href="assets/golden-scorpio-tarot-footer.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -148,8 +158,8 @@
           <form
             class="booking-form"
             id="bookingForm"
-            action="https://formspree.io/f/mnjlgjqq"
-            method="POST"
+            action="thank-you.html"
+            method="GET"
           >
             <input type="hidden" name="_subject" value="New Golden Scorpio Tarot request" />
             <label>
@@ -196,7 +206,8 @@
               <input name="consent" type="checkbox" required />
               I understand this reading is for reflection and entertainment.
             </label>
-            <button class="button primary full" type="submit">Send request</button>
+            <p class="checkout-note">Your request will be finalized after secure payment.</p>
+            <button class="button primary full" type="submit">Continue to Secure Checkout</button>
             <p class="form-status" id="formStatus" role="status"></p>
           </form>
         </div>

@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Customer Support | Golden Scorpio Tarot</title>
+    <title>Request Confirmation | Golden Scorpio Tarot</title>
     <meta
       name="description"
-      content="Customer support information for Golden Scorpio Tarot reading purchases and questions."
+      content="Finalize your paid Golden Scorpio Tarot reading request after secure checkout."
     />
-    <meta property="og:title" content="Golden Scorpio Tarot Customer Support" />
+    <meta property="og:title" content="Golden Scorpio Tarot Request Confirmation" />
     <meta
       property="og:description"
       content="Book golden tarot readings, request personal guidance, and pull a virtual golden card."
     />
     <meta property="og:image" content="https://goldenscorpiotarot.com/assets/golden-scorpio-tarot-footer.png" />
-    <meta property="og:url" content="https://goldenscorpiotarot.com/support.html" />
+    <meta property="og:url" content="https://goldenscorpiotarot.com/thank-you.html" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="styles.css" />
@@ -35,32 +35,24 @@
     </header>
 
     <main class="policy-content">
-      <p class="section-kicker">Golden Scorpio Tarot</p>
-      <h1>Customer Support</h1>
+      <p class="section-kicker">Secure checkout complete</p>
+      <h1>Finalize Your Reading Request</h1>
       <p>
-        For questions about a tarot reading, payment, booking request, delivery details, or a
-        cancellation before work has begun, contact Golden Scorpio Tarot by email.
+        Your payment step is complete. Send your saved reading details now so Golden Scorpio Tarot
+        can prepare your reading.
       </p>
 
-      <div class="support-card">
-        <p class="section-kicker">Support Email</p>
-        <a href="mailto:goldenscorpiotarot@gmail.com">goldenscorpiotarot@gmail.com</a>
+      <div class="support-card" id="requestSummary">
+        <p>Loading your saved request...</p>
       </div>
 
-      <h2>What To Include</h2>
-      <p>To help resolve your request quickly, please include:</p>
-      <ul>
-        <li>The email address used for your booking or Stripe checkout.</li>
-        <li>The reading type you selected.</li>
-        <li>A short description of what you need help with.</li>
-      </ul>
-
-      <h2>Reading Support</h2>
-      <p>
-        Tarot readings are personal reflection and entertainment services. Golden Scorpio Tarot
-        cannot provide emergency, medical, legal, financial, or crisis support. For urgent or
-        professional matters, contact a qualified professional or emergency service.
-      </p>
+      <div class="confirmation-actions">
+        <button class="button primary" type="button" id="finalizeRequest">
+          Send reading request
+        </button>
+        <a class="button ghost" href="index.html#book">Start over</a>
+      </div>
+      <p class="form-status" id="confirmationStatus" role="status"></p>
     </main>
 
     <footer>
@@ -76,5 +68,7 @@
         <a href="https://www.tiktok.com/@goldenscorpiotarot">TikTok @goldenscorpiotarot</a>
       </div>
     </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>

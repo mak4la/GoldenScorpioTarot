@@ -1,9 +1,16 @@
 const formspreeEndpoint = "https://formspree.io/f/mnjlgjqq";
+const REQUEST_STORAGE_KEY = "goldenScorpioPendingRequest";
 
 const STRIPE_LINKS = {
-  singleSpark: "https://buy.stripe.com/test_3cIaEYf5N2BDgX31qg2ZO03",
-  pastPresentFuture: "https://buy.stripe.com/test_5kQ6oI8Hp0tvfSZ1qg2ZO01",
-  goldenDeepDive: "https://buy.stripe.com/test_00w28s2j1901gX34Cs2ZO00",
+  singleSpark: "https://buy.stripe.com/REPLACE_SINGLE_SPARK",
+  pastPresentFuture: "https://buy.stripe.com/REPLACE_PAST_PRESENT_FUTURE",
+  goldenDeepDive: "https://buy.stripe.com/REPLACE_GOLDEN_DEEP_DIVE",
+};
+
+const READING_TO_STRIPE_KEY = {
+  "Single Spark": "singleSpark",
+  "Past • Present • Future": "pastPresentFuture",
+  "Golden Deep Dive": "goldenDeepDive",
 };
 
 const deck = [
@@ -63,6 +70,9 @@ const cardResults = document.querySelector("#cardResults");
 const pullCards = document.querySelector("#pullCards");
 const bookingForm = document.querySelector("#bookingForm");
 const formStatus = document.querySelector("#formStatus");
+const finalizeRequest = document.querySelector("#finalizeRequest");
+const confirmationStatus = document.querySelector("#confirmationStatus");
+const requestSummary = document.querySelector("#requestSummary");
 
 function shuffleCards(cards) {
   return [...cards].sort(() => Math.random() - 0.5);
@@ -83,7 +93,7 @@ function renderCards(count) {
     .join("");
 }
 
-pullCards.addEventListener("click", () => {
+pullCards?.addEventListener("click", () => {
   const count = Number(document.querySelector("input[name='spread']:checked").value);
   renderCards(count);
 });
@@ -93,45 +103,154 @@ document.querySelectorAll("[data-stripe-link]").forEach((link) => {
   link.href = STRIPE_LINKS[stripeKey];
 });
 
-bookingForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+function getStripeCheckoutUrl(reading, email) {
+  const stripeKey = READING_TO_STRIPE_KEY[reading];
+  const stripeUrl = STRIPE_LINKS[stripeKey];
 
-  if (!bookingForm.reportValidity()) {
-    return;
+  if (!stripeUrl) {
+    throw new Error("Please choose one of the listed reading types.");
   }
 
-  const formData = new FormData(bookingForm);
-  const submitButton = bookingForm.querySelector("button[type='submit']");
+  const url = new URL(stripeUrl);
+  url.searchParams.set("prefilled_email", email);
+  url.searchParams.set("client_reference_id", `golden-scorpio-${Date.now()}`);
+  return url.toString();
+}
 
-  formData.set("_replyto", formData.get("email"));
-  formData.set("_subject", `Reading request: ${formData.get("reading")}`);
+function getRequestData(form) {
+  const formData = new FormData(form);
 
-  submitButton.disabled = true;
-  submitButton.textContent = "Sending...";
-  formStatus.textContent = "Sending your request...";
+  return {
+    email: formData.get("email") || "",
+    reading: formData.get("reading") || "",
+    focus: formData.get("focus") || "",
+    details: formData.get("details") || "",
+    delivery: formData.get("delivery") || "",
+    consent: formData.get("consent") === "on",
+    savedAt: new Date().toISOString(),
+  };
+}
 
-  fetch(formspreeEndpoint, {
+function getSavedRequest() {
+  const savedRequest = window.localStorage.getItem(REQUEST_STORAGE_KEY);
+
+  if (!savedRequest) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(savedRequest);
+  } catch {
+    window.localStorage.removeItem(REQUEST_STORAGE_KEY);
+    return null;
+  }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function createRequestFormData(request) {
+  const formData = new FormData();
+
+  formData.set("email", request.email);
+  formData.set("_replyto", request.email);
+  formData.set("reading", request.reading);
+  formData.set("focus", request.focus);
+  formData.set("details", request.details);
+  formData.set("delivery", request.delivery);
+  formData.set("consent", request.consent ? "Confirmed" : "Not confirmed");
+  formData.set("payment_status", "Customer returned from Stripe checkout");
+  formData.set("_subject", `Paid reading request: ${request.reading}`);
+
+  return formData;
+}
+
+function submitSavedRequest(request) {
+  return fetch(formspreeEndpoint, {
     method: "POST",
-    body: formData,
+    body: createRequestFormData(request),
     headers: {
       Accept: "application/json",
     },
-  })
-    .then(async (response) => {
-      if (!response.ok) {
-        const data = await response.json().catch(() => ({}));
-        const message = data.errors?.[0]?.message || "Please check the form and try again.";
-        throw new Error(message);
-      }
+  }).then(async (response) => {
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      const message = data.errors?.[0]?.message || "Please try sending your request again.";
+      throw new Error(message);
+    }
+  });
+}
 
-      bookingForm.reset();
-      formStatus.textContent = "Your request was sent. Thank you for booking a reading.";
-    })
-    .catch((error) => {
-      formStatus.textContent = error.message || "Something went wrong. Please try again.";
-    })
-    .finally(() => {
-      submitButton.disabled = false;
-      submitButton.textContent = "Send request";
-    });
+bookingForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  if (!bookingForm.reportValidity()) {
+    formStatus.textContent = "Please complete the required fields before checkout.";
+    return;
+  }
+
+  const request = getRequestData(bookingForm);
+  const submitButton = bookingForm.querySelector("button[type='submit']");
+
+  try {
+    const checkoutUrl = getStripeCheckoutUrl(request.reading, request.email);
+
+    window.localStorage.setItem(REQUEST_STORAGE_KEY, JSON.stringify(request));
+    submitButton.disabled = true;
+    submitButton.textContent = "Opening secure checkout...";
+    formStatus.textContent = "Your details are saved. Sending you to secure checkout...";
+    window.location.href = checkoutUrl;
+  } catch (error) {
+    formStatus.textContent = error.message || "Please check the form and try again.";
+  }
 });
+
+if (requestSummary && confirmationStatus && finalizeRequest) {
+  const savedRequest = getSavedRequest();
+
+  if (!savedRequest) {
+    requestSummary.innerHTML = `
+      <p>No saved reading request was found on this device. If you already paid, email
+      <a href="mailto:goldenscorpiotarot@gmail.com">goldenscorpiotarot@gmail.com</a>
+      with your Stripe receipt and reading details.</p>
+    `;
+    finalizeRequest.disabled = true;
+    confirmationStatus.textContent = "There is no saved request to finalize.";
+  } else {
+    requestSummary.innerHTML = `
+      <h2>${escapeHtml(savedRequest.reading)}</h2>
+      <p><strong>Email:</strong> ${escapeHtml(savedRequest.email)}</p>
+      <p><strong>Focus:</strong> ${escapeHtml(savedRequest.focus || "Not provided")}</p>
+      <p><strong>Delivery:</strong> ${escapeHtml(savedRequest.delivery)}</p>
+    `;
+
+    finalizeRequest.addEventListener("click", () => {
+      finalizeRequest.disabled = true;
+      finalizeRequest.textContent = "Sending request...";
+      confirmationStatus.textContent = "Sending your paid reading request...";
+
+      submitSavedRequest(savedRequest)
+        .then(() => {
+          window.localStorage.removeItem(REQUEST_STORAGE_KEY);
+          requestSummary.innerHTML = `
+            <h2>Request confirmed</h2>
+            <p>Your reading request has been sent to Golden Scorpio Tarot.</p>
+          `;
+          confirmationStatus.textContent = "Thank you. Your request is confirmed.";
+          finalizeRequest.remove();
+        })
+        .catch((error) => {
+          finalizeRequest.disabled = false;
+          finalizeRequest.textContent = "Send reading request";
+          confirmationStatus.textContent =
+            error.message || "Something went wrong. Please try again.";
+        });
+    });
+  }
+}

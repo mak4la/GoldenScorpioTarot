@@ -540,6 +540,13 @@ fieldset {
   min-height: 1.5rem;
 }
 
+.checkout-note {
+  color: var(--bright-gold);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0;
+}
+
 footer {
   align-items: center;
   display: flex;
@@ -632,6 +639,13 @@ footer a {
   overflow-wrap: anywhere;
 }
 
+.confirmation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
 @media (max-width: 800px) {
   .site-header,
   footer {
@@ -663,6 +677,17 @@ footer a {
     justify-content: flex-start;
   }
 
+  .footer-brand {
+    align-self: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-brand img {
+    height: 4rem;
+    width: 4rem;
+  }
+
   .sticky-copy {
     position: static;
   }
@@ -679,6 +704,17 @@ footer a {
   }
 
   .hero-actions .button {
+    width: 100%;
+  }
+
+  .footer-brand img {
+    height: 3.25rem;
+    width: 3.25rem;
+  }
+
+  .footer-links {
+    justify-content: center;
+    text-align: center;
     width: 100%;
   }
 }

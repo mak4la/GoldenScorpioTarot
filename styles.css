@@ -540,6 +540,12 @@ fieldset {
   min-height: 1.5rem;
 }
 
+.selection-note {
+  color: var(--bright-gold);
+  font-weight: 800;
+  margin: -0.35rem 0 0;
+}
+
 .checkout-note {
   color: var(--bright-gold);
   font-size: 0.95rem;

@@ -82,7 +82,7 @@
             </div>
             <h3>Single Spark</h3>
             <p>$5 • A one-card reading for yes/no, daily guidance, or a quick energetic check.</p>
-            <a class="text-button payment-link" data-stripe-link="singleSpark" href="#">Select</a>
+            <a class="text-button" data-reading-choice="Single Spark" href="#book">Select</a>
           </article>
           <article class="reading-card">
             <div class="mini-card" aria-hidden="true">
@@ -90,7 +90,7 @@
             </div>
             <h3>Past • Present • Future</h3>
             <p>$10 • A three-card spread for timing, relationship patterns, career moves, or next steps.</p>
-            <a class="text-button payment-link" data-stripe-link="pastPresentFuture" href="#">Select</a>
+            <a class="text-button" data-reading-choice="Past • Present • Future" href="#book">Select</a>
           </article>
           <article class="reading-card">
             <div class="mini-card" aria-hidden="true">
@@ -98,7 +98,7 @@
             </div>
             <h3>Golden Deep Dive</h3>
             <p>$15 • A fuller reading for layered situations where context, options, and patterns matter.</p>
-            <a class="text-button payment-link" data-stripe-link="goldenDeepDive" href="#">Select</a>
+            <a class="text-button" data-reading-choice="Golden Deep Dive" href="#book">Select</a>
           </article>
         </div>
         <p class="payment-note">
@@ -179,6 +179,9 @@
                 <option>Golden Deep Dive</option>
               </select>
             </label>
+            <p class="selection-note" id="readingSelectionNote">
+              Choose a reading above or select one here.
+            </p>
             <label>
               Focus area
               <input

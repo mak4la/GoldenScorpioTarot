@@ -70,6 +70,8 @@ const cardResults = document.querySelector("#cardResults");
 const pullCards = document.querySelector("#pullCards");
 const bookingForm = document.querySelector("#bookingForm");
 const formStatus = document.querySelector("#formStatus");
+const readingSelect = document.querySelector("#readingSelect");
+const readingSelectionNote = document.querySelector("#readingSelectionNote");
 const finalizeRequest = document.querySelector("#finalizeRequest");
 const confirmationStatus = document.querySelector("#confirmationStatus");
 const requestSummary = document.querySelector("#requestSummary");
@@ -98,9 +100,29 @@ pullCards?.addEventListener("click", () => {
   renderCards(count);
 });
 
-document.querySelectorAll("[data-stripe-link]").forEach((link) => {
-  const stripeKey = link.dataset.stripeLink;
-  link.href = STRIPE_LINKS[stripeKey];
+function updateReadingSelectionNote(reading) {
+  if (!readingSelectionNote) {
+    return;
+  }
+
+  readingSelectionNote.textContent = reading
+    ? `Thank you for choosing the ${reading} reading.`
+    : "Choose a reading above or select one here.";
+}
+
+document.querySelectorAll("[data-reading-choice]").forEach((link) => {
+  link.addEventListener("click", () => {
+    const reading = link.dataset.readingChoice;
+
+    if (readingSelect) {
+      readingSelect.value = reading;
+      updateReadingSelectionNote(reading);
+    }
+  });
+});
+
+readingSelect?.addEventListener("change", () => {
+  updateReadingSelectionNote(readingSelect.value);
 });
 
 function getStripeCheckoutUrl(reading, email) {

@@ -1,0 +1,617 @@
+:root {
+  color-scheme: dark;
+  --black: #070605;
+  --ink: #11100d;
+  --panel: rgba(18, 15, 10, 0.86);
+  --gold: #d9ad53;
+  --bright-gold: #ffd77a;
+  --muted-gold: #9c7b3d;
+  --ivory: #f8ecd0;
+  --soft: #cdbd99;
+  --rose: #6f3437;
+  --green: #263c32;
+  --line: rgba(255, 215, 122, 0.24);
+  --shadow: rgba(0, 0, 0, 0.42);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(217, 173, 83, 0.16), transparent 28rem),
+    linear-gradient(135deg, #070605 0%, #12100d 46%, #090807 100%);
+  color: var(--ivory);
+}
+
+a {
+  color: inherit;
+}
+
+.site-header {
+  align-items: center;
+  background: rgba(7, 6, 5, 0.82);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  left: 0;
+  min-height: 4.5rem;
+  padding: 0.85rem clamp(1rem, 4vw, 3rem);
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  align-items: center;
+  display: inline-flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  gap: 0.7rem;
+  letter-spacing: 0;
+  text-decoration: none;
+}
+
+.brand-mark {
+  align-items: center;
+  background: linear-gradient(145deg, var(--bright-gold), var(--muted-gold));
+  border-radius: 50%;
+  color: #120f09;
+  display: inline-flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  height: 2.25rem;
+  justify-content: center;
+  width: 2.25rem;
+}
+
+.brand-mark svg {
+  fill: #120f09;
+  height: 1.72rem;
+  width: 1.72rem;
+}
+
+nav {
+  display: flex;
+  gap: clamp(0.65rem, 2vw, 1.6rem);
+  font-size: 0.9rem;
+}
+
+nav a {
+  color: var(--soft);
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--bright-gold);
+}
+
+.hero {
+  min-height: 92vh;
+  overflow: hidden;
+  padding: 8.2rem clamp(1rem, 5vw, 5rem) 4rem;
+  position: relative;
+}
+
+.hero-image,
+.hero-shade {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.hero-image {
+  object-fit: cover;
+}
+
+.hero-shade {
+  background:
+    linear-gradient(90deg, rgba(7, 6, 5, 0.94) 0%, rgba(7, 6, 5, 0.64) 42%, rgba(7, 6, 5, 0.2) 100%),
+    linear-gradient(0deg, rgba(7, 6, 5, 0.95) 0%, transparent 34%);
+}
+
+.hero-content {
+  max-width: 42rem;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow,
+.section-kicker {
+  color: var(--bright-gold);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.9rem;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(3.2rem, 9vw, 7rem);
+  line-height: 0.9;
+  max-width: 11ch;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1;
+}
+
+h3 {
+  font-size: 1.45rem;
+}
+
+p {
+  color: var(--soft);
+  line-height: 1.7;
+}
+
+.hero-content p:not(.eyebrow) {
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  max-width: 38rem;
+}
+
+.hero-actions,
+.segmented,
+.reading-grid {
+  display: flex;
+}
+
+.hero-actions {
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.8rem;
+}
+
+.button,
+.text-button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  min-height: 3rem;
+}
+
+.button {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-weight: 800;
+  justify-content: center;
+  padding: 0.9rem 1.3rem;
+  text-decoration: none;
+}
+
+.button.primary {
+  background: linear-gradient(145deg, var(--bright-gold), var(--gold) 46%, #86652f);
+  color: #100d08;
+  box-shadow: 0 1rem 2.4rem rgba(217, 173, 83, 0.18);
+}
+
+.button.ghost {
+  border: 1px solid var(--line);
+  color: var(--ivory);
+  background: rgba(7, 6, 5, 0.5);
+}
+
+.button.full {
+  width: 100%;
+}
+
+.intro,
+.band,
+.split {
+  padding: clamp(3rem, 8vw, 6.5rem) clamp(1rem, 5vw, 5rem);
+}
+
+.intro {
+  align-items: end;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 34rem);
+}
+
+.band {
+  background:
+    linear-gradient(120deg, rgba(38, 60, 50, 0.28), transparent 42%),
+    rgba(7, 6, 5, 0.34);
+  border-block: 1px solid var(--line);
+}
+
+.section-heading {
+  margin-bottom: 2rem;
+  max-width: 43rem;
+}
+
+.reading-grid {
+  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.reading-card,
+.booking-form,
+.copy-panel,
+.virtual-table,
+.trust-note {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 1.5rem 4rem var(--shadow);
+}
+
+.reading-card {
+  border-radius: 8px;
+  min-height: 22rem;
+  padding: 1.35rem;
+}
+
+.mini-card {
+  align-items: center;
+  aspect-ratio: 5 / 7;
+  background:
+    linear-gradient(#17120b, #17120b) padding-box,
+    linear-gradient(145deg, var(--bright-gold), #7b5728) border-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.3rem;
+  max-width: 6.5rem;
+}
+
+.mini-card span {
+  color: var(--bright-gold);
+  font-size: 2.2rem;
+}
+
+.text-button {
+  background: transparent;
+  color: var(--bright-gold);
+  font-weight: 800;
+  padding: 0;
+}
+
+.split {
+  align-items: stretch;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(18rem, 0.8fr) minmax(20rem, 1.2fr);
+}
+
+.copy-panel,
+.virtual-table {
+  border-radius: 8px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.segmented {
+  background: rgba(255, 215, 122, 0.08);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  margin: 1.5rem 0;
+  padding: 0.3rem;
+  width: fit-content;
+}
+
+.segmented label {
+  cursor: pointer;
+}
+
+.segmented input {
+  clip: rect(0 0 0 0);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+.segmented span {
+  border-radius: 999px;
+  display: block;
+  font-weight: 800;
+  min-width: 5.5rem;
+  padding: 0.7rem 1rem;
+  text-align: center;
+}
+
+.segmented input:checked + span {
+  background: var(--bright-gold);
+  color: #120f09;
+}
+
+.virtual-table {
+  background:
+    linear-gradient(120deg, rgba(111, 52, 55, 0.22), transparent),
+    var(--panel);
+  min-height: 26rem;
+}
+
+.pulled-cards {
+  align-items: stretch;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  height: 100%;
+}
+
+.tarot-result,
+.tarot-back {
+  aspect-ratio: 5 / 7;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 18rem;
+  overflow: hidden;
+  padding: 1rem;
+  position: relative;
+}
+
+.tarot-back {
+  align-items: center;
+  background:
+    radial-gradient(circle at center, rgba(255, 215, 122, 0.2), transparent 42%),
+    linear-gradient(145deg, #17120b, #070605);
+  border: 1px solid var(--gold);
+  color: var(--bright-gold);
+  justify-content: center;
+  text-align: center;
+}
+
+.card-sigil {
+  align-items: center;
+  align-self: center;
+  color: var(--bright-gold);
+  display: flex;
+  filter: drop-shadow(0 0 1.4rem rgba(255, 215, 122, 0.32));
+  height: 6rem;
+  justify-content: center;
+  margin: auto 0 1rem;
+  width: 6rem;
+}
+
+.card-sigil svg {
+  fill: currentColor;
+  height: 100%;
+  width: 100%;
+}
+
+.tarot-result {
+  background:
+    linear-gradient(#15100a, #0b0907) padding-box,
+    linear-gradient(145deg, var(--bright-gold), #5d421d) border-box;
+  border: 2px solid transparent;
+}
+
+.tarot-result::before {
+  background:
+    radial-gradient(circle at center, rgba(255, 215, 122, 0.18), transparent 62%),
+    linear-gradient(180deg, rgba(255, 215, 122, 0.16), transparent);
+  content: "";
+  inset: 0;
+  opacity: 0.78;
+  position: absolute;
+}
+
+.tarot-result > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card-art {
+  align-items: center;
+  align-self: center;
+  color: var(--bright-gold);
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  margin: 0.4rem 0;
+  max-height: 10rem;
+  width: 100%;
+}
+
+.card-art svg {
+  fill: none;
+  height: min(9rem, 36vw);
+  max-height: 100%;
+  max-width: 100%;
+  overflow: visible;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.8;
+}
+
+.card-art .filled {
+  fill: currentColor;
+  stroke: none;
+}
+
+.card-art .thin {
+  stroke-width: 2.2;
+}
+
+.tarot-result small {
+  color: var(--gold);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.tarot-result strong {
+  color: var(--ivory);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+  font-weight: 500;
+}
+
+.booking-layout {
+  display: grid;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(18rem, 0.8fr) minmax(20rem, 1.2fr);
+}
+
+.sticky-copy {
+  align-self: start;
+  position: sticky;
+  top: 6rem;
+}
+
+.trust-note {
+  border-radius: 8px;
+  color: var(--soft);
+  line-height: 1.65;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.booking-form {
+  border-radius: 8px;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+label,
+legend {
+  color: var(--ivory);
+  display: grid;
+  font-weight: 800;
+  gap: 0.45rem;
+}
+
+input,
+select,
+textarea {
+  background: rgba(7, 6, 5, 0.7);
+  border: 1px solid rgba(255, 215, 122, 0.28);
+  border-radius: 8px;
+  color: var(--ivory);
+  font: inherit;
+  min-height: 3rem;
+  padding: 0.85rem 0.95rem;
+  width: 100%;
+}
+
+textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.button:focus-visible,
+.text-button:focus-visible {
+  outline: 3px solid rgba(255, 215, 122, 0.35);
+  outline-offset: 2px;
+}
+
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 1rem;
+}
+
+.inline-option {
+  align-items: center;
+  display: flex;
+  font-weight: 700;
+  gap: 0.65rem;
+}
+
+.inline-option input {
+  accent-color: var(--gold);
+  min-height: auto;
+  width: auto;
+}
+
+.consent {
+  color: var(--soft);
+}
+
+.form-status {
+  margin: 0;
+  min-height: 1.5rem;
+}
+
+footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem clamp(1rem, 5vw, 5rem);
+}
+
+footer p {
+  color: var(--ivory);
+  font-family: Georgia, "Times New Roman", serif;
+  margin: 0;
+}
+
+footer a {
+  color: var(--bright-gold);
+}
+
+@media (max-width: 800px) {
+  .site-header,
+  footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hero {
+    min-height: 86vh;
+  }
+
+  .intro,
+  .split,
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .reading-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-copy {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .hero {
+    padding-top: 9.8rem;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+  }
+}

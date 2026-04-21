@@ -2,9 +2,9 @@ const formspreeEndpoint = "https://formspree.io/f/mnjlgjqq";
 const REQUEST_STORAGE_KEY = "goldenScorpioPendingRequest";
 
 const STRIPE_LINKS = {
-  singleSpark: "https://buy.stripe.com/REPLACE_SINGLE_SPARK",
-  pastPresentFuture: "https://buy.stripe.com/REPLACE_PAST_PRESENT_FUTURE",
-  goldenDeepDive: "https://buy.stripe.com/REPLACE_GOLDEN_DEEP_DIVE",
+  singleSpark: "https://buy.stripe.com/fZu7sMbZvbhf5D9ewa6kg02",
+  pastPresentFuture: "https://buy.stripe.com/5kQeVe7JfbhfghNbjY6kg01",
+  goldenDeepDive: "https://buy.stripe.com/3cIeVeaVr4SRghNgEi6kg00",
 };
 
 const READING_TO_STRIPE_KEY = {

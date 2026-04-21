@@ -113,7 +113,6 @@ function getStripeCheckoutUrl(reading, email) {
 
   const url = new URL(stripeUrl);
   url.searchParams.set("prefilled_email", email);
-  url.searchParams.set("client_reference_id", `golden-scorpio-${Date.now()}`);
   return url.toString();
 }
 
